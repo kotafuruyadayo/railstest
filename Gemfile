@@ -52,7 +52,7 @@ gem 'roo'
 # Bootstrap用
 gem "jquery-rails"
 #gem "jquery-ui-rails"
-gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap', '~> 4.3.1'
 #gem 'coffee-script-source', '1.8.0'        #←これを追加
 
 group :development, :test do
