@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス(ユーザ管理)・新規登録</h1>
+  <body>
+    <div class=<%=CLASS::MODORU %>>
+      <%= link_to CONST_BTN::MODORU, "/mainte_user" %>
+    </div>
+    <br/><br/>
+    <%= form_tag("/mainte_user/new",:method => 'post') do %>
+      <div class="ml-auto posts_button">
+        <%= submit_tag CONST_BTN::NEW, name:nil,data: {confirm: CONST_MSG::TOUROKUKAKUNIN}, :class=>"search btn-warning" %>
+      </div>
+      <br/>
+      <table class=<%= CLASS::TABLECENTER %> border=2 width=400>
+        <%= hidden_field_tag :r_id, "" %>
+        <tr><td><%=CONST_TXT::USERID %></td>
+            <td><%= text_field_tag :name,"", {size:10} %></td></tr>
+        <tr><td><%=CONST_TXT::PASSWORD %></td>
+            <td><%= text_field_tag :password,"", {size:10} %></td></tr>
+        <tr><td><%=CONST_TXT::PASSWORDCONFIRM %></td>
+            <td><%= text_field_tag :passwordkakunin,"", {size:10} %></td></tr>
+        <tr><td><%=CONST_TXT::DEPOSAKI %></td>
+            <td><%= select_tag :depomst_id1, options_from_collection_for_select(combo_deposaki , :mst_id, :mst_cd) %></td></tr>
+        <tr><td><%=CONST_TXT::KENGEN %></td>
+            <td><%= select_tag :kengen, options_for_select({CONST::MAINTEUSER_KOUSINKENGEN => 0, CONST::MAINTEUSER_SANSHOUKENGEN => 1}) %></td></tr>
+      </table>
+    <% end %>
+  </body>
+</html>

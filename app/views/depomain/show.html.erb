@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <% @depomains_dt.each do |f| %>
+    <h1>デポ入出荷・詳細入力(成契番号：<%= f.seikei_num %>)</h1>
+    <body>
+      <div class=<%=CLASS::MODORU %>>
+        <%= link_to :back do %><% CONST_BTN::MODORU %><% end %>
+      </div>
+      <br/><br/>
+      <div class="Shousai">
+        <%= form_tag("/depomain/:id",:method => 'patch') do %>
+          <div class=<%=CLASS::MODORU %>>
+            <% if !authority_convert_kami1(currentuser_authorityget).eql?(CONST_KENGEN::REF) %>
+              <%= submit_tag CONST_BTN::KOUSIN, name:nil,data: {confirm: CONST_MSG::KOUSINKAKUNIN}, :class=>"search btn-warning" %>
+              <% if authority_convert(currentuser_authorityget).eql?(CONST_KENGEN::ADMIN) %>
+                <td>　　　</td>
+                <%= submit_tag CONST_BTN::SAKUJYO, name:"deletebutton",data: {confirm: CONST_MSG::SAKUJYOKAKUNIN}, :class=>"delete btn-danger" %>
+              <% end %>
+            <% end %>
+          </div>
+          <br/>
+          <table class=<%= CLASS::TABLECENTER %> border=2>
+            <%= hidden_field_tag :id_dt,f.id %>
+            <%= hidden_field_tag :keep_day,f.keep_day %>
+            <%= hidden_field_tag :over_day,f.over_day %>
+            <tr><td width=100><%=CONST_TXT::DEPOSAKI %></td>
+                <td><%= text_field_tag :depo_cd,f.depo_cd, {class:"disable",size:10,readonly:"true"} %></td>
+                <td width=120><%=CONST_TXT::EIGYOTANTO %></td>
+                <td><%= text_field_tag :sales_name,f.sales_name, {class:"disable",size:20, maxlength:10, readonly:"true"} %></td></tr>
+            <tr><td><%=CONST_TXT::SEIKEINO %></td>
+                <td><%= text_field_tag :seikei_num,f.seikei_num, {class:"disable",size:10, readonly:"true"} %></td>
+                <td><%=CONST_TXT::UNSOUGYOUSHACD %></td>
+                <td><%= text_field_tag :carrier_code,f.carrier_code, {class:"disable",size:5, readonly:"true"} %></td></tr>
+            <tr><td><%=CONST_TXT::NOUNYUSAKIMEI %></td>
+                <td><%= text_field_tag :delivery_name1,f.delivery_name1, {class:"disable",size:60,readonly:"true"} %></td>
+                <td><%=CONST_TXT::UNSOUGYOUSHAMEI %></td>
+                <td><%= text_field_tag :carrier_name,f.carrier_name, {class:"disable",size:30, readonly:"true"} %></td></tr>
+            <tr><td><%=CONST_TXT::NOUNYUSAKIJYUSHO %></td>
+                <td><%= text_field_tag :delivery_address1,f.delivery_address1, {class:"disable",size:60,readonly:"true"} %></td>
+                <td><%=CONST_TXT::HOKANJYOUTAIKBN %></td>
+                <td><%= text_field_tag :keep_division,f.keep_division, {class:"disable",size:2, readonly:"true"} %>　<%= CONST::DEPOMAINSHOW1 %></td></tr>
+            <tr><td><%=CONST_TXT::HASOUSAKIMEI %></td>
+                <td><%= text_field_tag :send_name1,f.send_name1, {class:"disable",size:60, readonly:"true"} %></td>
+                <td colspan=2>　</td></tr>
+            <tr><td><%=CONST_TXT::HASOUSAKIJYUSHO %></td><td><%= text_field_tag :send_address1,f.send_address1, {class:"disable",size:60, readonly:"true"} %></td>
+                <td colspan=2>　</td></tr>
+            <tr><td><%=CONST_TXT::KOUJYOSYUKASU %></td><td><%= text_field_tag :shipment_cnt,f.shipment_cnt, {class:"disable",size:12, readonly:"true"} %></td>
+                <td colspan=2 align=center><font color=blue><%= CONST_TXT::HOKANNISU %><%= f.keep_day %>日　　<%= CONST_TXT::CYAKUBIOVER %><%= f.over_day %>日　　<%= CONST_TXT::HOKANKISU %><%= f.fee_point %> 　</font></td></tr>
+            <tr><td><%=CONST_TXT::KOUJYOSYUKABI %></td>
+                <td><%= text_field_tag :shipment_date,f.shipment_date, {class:"disable",size:12, readonly:"true"} %></td>
+                <td><%=CONST_TXT::DEPONYUKABI %></td>
+                <td><%= text_field_tag :depo_arrival_date,f.depo_arrival_date, {size:10, class:"datepicker",readonly:"true"} %></td></tr>
+            <tr><td><%=CONST_TXT::GENTITOUCHAKUBI %></td>
+                <td><%= text_field_tag :arrival_date,f.arrival_date, {class:"disable",size:12, readonly:"true"} %></td>
+                <td><%=CONST_TXT::DEPOSYUKABI %></td>
+                <td><%= text_field_tag :depo_shipment_date,f.depo_shipment_date, {size:10, class:"datepicker",readonly:"true"} %></td></tr>
+            <tr><td><%=CONST_TXT::HINMOKUCD %></td>
+                <td><%= text_field_tag :item_cd,f.item_cd, {class:"disable",size:12, readonly:"true"} %></td>
+                <td><%=CONST_TXT::NISUGATA %></td>
+                <td><%= select_tag :packing_type, options_from_collection_for_select(combo_nisugata_noall, :mst_cd, :mst_cd, selected:f.mst_cd3) %></td></tr>
+            <tr><td><%=CONST_TXT::KATABAN %></td>
+                <td><%= text_field_tag :serial_num,f.serial_num, {class:"disable",size:35, readonly:"true"}  %></td>
+                <td><%=CONST_TXT::DEPOSYUKARUISEKISU %></td>
+                <td><%= text_field_tag :depo_shipment_cnt,f.depo_shipment_cnt, {size:10, maxlength:8 ,min:"-99999999",max:"99999999",type:"number"} %></td></tr>
+            <tr><td><%=CONST_TXT::MEISYOU %></td>
+                <td><%= text_field_tag :product_name,f.product_name, {class:"disable",size:30, readonly:"true"} %></td>
+                <td><%=CONST_TXT::HAISOUGYOUSHA %></td>
+                <td><%= select_tag :delivery_trader, options_from_collection_for_select(combo_haisougyousha, :mst_cd, :mst_cd, selected:f.mst_cd5) %></td></tr>
+            <tr><td><%=CONST_TXT::KOUJYOUSTS %></td>
+                <td><%= text_field_tag :status,f.status, {class:"disable",size:2, maxlength:1,readonly:"true"} %>　<%= CONST::DEPOMAINSHOW2 %></td>
+                <td><%=CONST_TXT::HAISOURYOUKIN %></td>
+                <td><%= text_field_tag :delivery_charge,f.delivery_charge, {size:10, maxlength:8 ,min:"-99999999",max:"99999999",type:"number"} %></td></tr>
+            <tr><td><%=CONST_TXT::JIBUKA %></td>
+                <td><%= text_field_tag :section_code,f.section_code, {class:"disable",size:5, readonly:"true"} %></td>
+                <td><%=CONST_TXT::HAISOUSHASHU %></td>
+                <td><%= select_tag :delivery_car, options_from_collection_for_select(combo_haisoushashu, :mst_cd, :mst_cd, selected:f.mst_cd4) %></td></tr>
+            <tr><td><%=CONST_TXT::JIBMEISHOU %></td>
+                <td><%= text_field_tag :section_name1,f.section_name1, {class:"disable",size:40, readonly:"true"} %></td>
+                <td><%=CONST_TXT::HAISOUSAKIMEI %></td>
+                <td><%= text_field_tag :delivery_name2,f.delivery_name2, {size:60, maxlength:30 } %></td></tr>
+            <tr><td><%=CONST_TXT::KAMEISHOU %></td>
+                <td><%= text_field_tag :section_name2,f.section_name2, {class:"disable",size:40, readonly:"true"} %></td>
+                <td><%=CONST_TXT::HAISOUSAKIJYUUSHO %></td>
+                <td><%= text_field_tag :delivery_address2,f.delivery_address2, {size:60, maxlength:60 } %></td></tr>
+            <tr><td><%=CONST_TXT::KOUJYOUBIKO %></td>
+                <td><%= text_field_tag :remarks_factory,f.remarks_factory, {size:60, maxlength:255} %></td>
+                <td><%=CONST_TXT::DEPOBIKO %></td>
+                <td><%= text_field_tag :remarks_depo,f.remarks_depo, {size:60, maxlength:255 } %></td></tr>
+          </table>
+        <% end %>
+      </div>
+      <br/>
+      <br/>
+    </body>
+  <% end %>
+</html>

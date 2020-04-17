@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス(ユーザ管理)・更新</h1>
+  <body>
+    <% @users_dt.each do |f| %>
+      <div class=<%=CLASS::MODORU %>>
+        <%= link_to CONST_BTN::MODORU, "/mainte_user" %>
+      </div>
+      <br/><br/>
+      <%= form_tag("/mainte_user/#{f.id}",:method => 'post') do %>
+        <div class="ml-auto posts_button">
+          <%= submit_tag CONST_BTN::KOUSIN, name:nil,data: {confirm: CONST_MSG::KOUSINKAKUNIN}, :class=>"search btn-warning" %>
+          <%= submit_tag CONST_BTN::SAKUJYO, name:"deletebutton",data: {confirm: CONST_MSG::SAKUJYOKAKUNIN}, :class=>"search btn-danger" %>
+        </div>
+        <br/>
+        <table class=<%= CLASS::TABLECENTER %> border=2 width=400>
+          <%= hidden_field_tag :r_id, f.id %>
+          <tr><td><%=CONST_TXT::USERID %></td>
+              <td><%= text_field_tag :name,f.name, {size:10,class:"disable",readonly:"true"} %></td></tr>
+          <tr><td><%=CONST_TXT::PASSWORD %></td>
+              <td><%= text_field_tag :password,f.email, {size:10} %></td></tr>
+          <tr><td><%=CONST_TXT::PASSWORDCONFIRM %></td>
+              <td><%= text_field_tag :passwordkakunin,"", {size:10} %></td></tr>
+          <tr><td><%=CONST_TXT::DEPOSAKI %></td>
+              <td><%= select_tag :depomst_id1, options_from_collection_for_select(combo_deposaki , :mst_id, :mst_cd, selected:authority_convert(f.authority)) %></td></tr>
+          <tr><td><%=CONST_TXT::KENGEN %></td>
+              <td><%= select_tag :kengen, options_for_select({CONST::MAINTEUSER_KOUSINKENGEN => 0, CONST::MAINTEUSER_SANSHOUKENGEN => 1}, selected:authority_convert_kami1(f.authority)) %></td></tr>
+        </table>
+      <% end %>
+    <% end %>
+  </body>
+</html>

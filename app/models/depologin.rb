@@ -1,0 +1,3 @@
+class Depologin < ApplicationRecord
+
+end

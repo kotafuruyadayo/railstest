@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>デポ入出荷・照会（一覧）</h1>
+  <body>
+    <%= form_tag("/depomain",:method => 'get') do %>
+      <div class="hokagamenlink">
+        <%= link_to CONST_LINK::DATASHUTURYOKU, depomain_excel_path(format: "csv" \
+                                                    ,depomst_id1:@search_params[:depomst_id1] \
+                                                    ,depomst_id2:@search_params[:depomst_id2] \
+                                                    ,depo_arrival_dateFrom:@search_params[:depo_arrival_dateFrom],depo_arrival_dateTo:@search_params[:depo_arrival_dateTo] \
+                                                    ,depo_shipment_dateFrom:@search_params[:depo_shipment_dateFrom],depo_shipment_dateTo:@search_params[:depo_shipment_dateTo] \
+                                                    ,keep_dayFrom:@search_params[:keep_dayFrom],keep_dayTo:@search_params[:keep_dayTo] \
+                                                    ,over_dayFrom:@search_params[:over_dayFrom],over_dayTo:@search_params[:over_dayTo] \
+                                                    ,seikei_num:@search_params[:seikei_num] \
+                                                    ,section_code:@search_params[:section_code] \
+                                                    ,depomst_id3:@search_params[:depomst_id3] \
+                                                    ,fee_pointFrom:@search_params[:fee_pointFrom],fee_pointTo:@search_params[:fee_pointTo] \
+                                                    ,serial_num:@search_params[:serial_num] \
+                                                    ,product_name:@search_params[:product_name] \
+                                                    ,fixed_date:@search_params[:fixed_date] \
+                                                    ) %>
+        <% if authority_convert(currentuser_authorityget).eql?(CONST_KENGEN::ADMIN) && !authority_convert_kami1(currentuser_authorityget).eql?(CONST_KENGEN::REF) %>
+          <%= link_to CONST_LINK::KOUJYOUSHUKATOUROKU, "/depoupload" %>
+          <%= link_to CONST_LINK::BACKUP, depomain_excelall_path(format: "csv")%>
+          <%= link_to CONST_LINK::BACKUPMODOSI, "/backupupload" %>
+          <% if authority_convert_kami1(currentuser_authorityget).eql?(CONST_KENGEN::SADMIN) %>
+            <%= link_to CONST_LINK::MAINTENANCE, "/maintenance" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="Kensaku">
+        <table>
+          <tr><td>　　<%= CONST_TXT::DEPOSAKI %></td><td><%= select_tag :depomst_id1, options_from_collection_for_select(combo_deposaki, :mst_id, :mst_cd, selected:@search_params[:depomst_id1]) %></td>
+              <td>　　<%= CONST_TXT::HOKANJYOUTAI %></td><td><%= select_tag :depomst_id2, options_from_collection_for_select(combo_hokanjyoutai, :mst_id, :mst_cd, selected:@search_params[:depomst_id2]) %></td>
+              <td>　　<%= submit_tag CONST_BTN::KENSAKU, name:nil , :class=>"search btn-info" %></td><td><button type="submit" class="reset btn-info"><%= CONST_BTN::CLEAR %></button></td>
+          </tr>
+          <br>
+          <tr><td><%= CONST_TXT::DEPONYUKABI %></td><td><%= text_field_tag :depo_arrival_dateFrom, @search_params[:depo_arrival_dateFrom], {class:"datepicker"}  %>～<%= text_field_tag :depo_arrival_dateTo,@search_params[:depo_arrival_dateTo], {class:"datepicker"} %></td>
+              <td>　<%= CONST_TXT::DEPOSYUKABI %></td><td><%= text_field_tag :depo_shipment_dateFrom, @search_params[:depo_shipment_dateFrom], {class:"datepicker"} %>～<%= text_field_tag :depo_shipment_dateTo, @search_params[:depo_shipment_dateTo], {class:"datepicker"} %></td>
+          </tr>
+          <br>
+          <tr><td>　<%= CONST_TXT::HOKANNISU %></td><td><%= text_field_tag :keep_dayFrom, @search_params[:keep_dayFrom], {min:"-99999",max:"99999",type:"number"} %>～<%= text_field_tag :keep_dayTo, @search_params[:keep_dayTo], {min:"-99999",max:"99999",type:"number"} %></td>
+              <td>　<%= CONST_TXT::CYAKUBIOVER %></td><td><%= text_field_tag :over_dayFrom, @search_params[:over_dayFrom], {min:"-99999",max:"99999",type:"number"} %>～<%= text_field_tag :over_dayTo, @search_params[:over_dayTo], {min:"-99999",max:"99999",type:"number"} %></td>
+          </tr>
+          <br/>
+          <tr><td>　<%= CONST_TXT::SEIKEINO %></td><td><%= text_field_tag :seikei_num, @search_params[:seikei_num], {maxlength:8} %></td>
+              <td><%= CONST_TXT::JIBUKA %></td><td><%= text_field_tag :section_code, @search_params[:section_code], {maxlength:4} %></td>
+          </tr>
+          <tr><td>　　　<%= CONST_TXT::NISUGATA %></td><td><%= select_tag :depomst_id3, options_from_collection_for_select(combo_nisugata, :mst_id, :mst_cd, selected:@search_params[:depomst_id3]) %></td>
+              <td>　　<%= CONST_TXT::HOKANKISU %></td><td><%= text_field_tag :fee_pointFrom, @search_params[:fee_pointFrom], {min:"1",max:"99999",type:"number"}  %>～<%= text_field_tag :fee_pointTo,@search_params[:fee_pointTo], {min:"1",max:"99999",type:"number"} %></td>
+          </tr>
+          <tr><td>　　　<%= CONST_TXT::KATABAN %></td><td class="Kensaku2"><%= text_field_tag :serial_num, @search_params[:serial_num], {maxlength:20} %></td>
+              <td>　　　　<%= CONST_TXT::MEISYOU %></td><td class="Kensaku2"><%= text_field_tag :product_name, @search_params[:product_name], {maxlength:20} %></td>
+              <td>　<%= CONST_TXT::SITEIBIHOKAN %></td><td><%= text_field_tag :fixed_date, @search_params[:fixed_date], {class:"datepicker"} %></td>
+              <td style="position: absolute; right: 20px;"><div class="pagination">
+                                                             <%= will_paginate @depomains, :previous_label => CONST_BTN::MAE, :next_label => CONST_BTN::TUGI %><%= CONST_TXT::SOUDATA %><%= @depomains_cnt %><%= CONST_TXT::KEN %>
+                                                           </div>
+              </td>
+          </tr>
+<!-- <button type="button" class="btn btn-primary">Primary</button> -->
+<!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+<!-- <button type="button" class="btn btn-success">Success</button> -->
+<!-- <button type="button" class="btn btn-danger">Danger</button> -->
+<!-- <button type="button" class="btn btn-warning">Warning</button> -->
+<!-- <button type="button" class="btn btn-info">Info</button> -->
+<!-- <button type="button" class="btn btn-light">Light</button> -->
+<!-- <button type="button" class="btn btn-dark">Dark</button> -->
+        </table>
+      </div>
+      <br/>
+    <% end %>
+    <div class="Meisai">
+      <%= form_tag("/depomain",:method => 'patch') do %>
+        <table id ="fav-table" class="table table-fixed">
+          <thead class="thead1">
+            <tr>
+              <th scope="col"><%= CONST_TXT::NO %></th>
+              <th scope="col"><%= CONST_TXT::DEPOSAKI %></th>
+              <th scope="col"><%= CONST_TXT::SEIKEINO %></th>
+              <th scope="col"><%= CONST_TXT::KOUJYOSYUKASU %></th>
+              <th scope="col"><%= CONST_TXT::KOUJYOSYUKABI %></th>
+              <th scope="col"><%= CONST_TXT::GENTITOUCHAKUBI %></th>
+              <th scope="col"><%= CONST_TXT::KATABAN %>／<%= CONST_TXT::MEISYOU %></th>
+              <th scope="col"><%= CONST_TXT::JIBUKA %></th>
+              <th scope="col"><%= CONST_TXT::EIGYOTANTO %></th>
+              <th scope="col"><%= CONST_TXT::HOKANJYOUTAI %></th>
+              <th scope="col"><%= CONST_TXT::DEPONYUKABI %></th>
+              <th scope="col"><%= CONST_TXT::DEPOSYUKABI %></th>
+              <th scope="col"><%= CONST_TXT::HOKANNISU %></th>
+              <th scope="col"><%= CONST_TXT::CYAKUBIOVER %></th>
+              <th scope="col"><%= CONST_TXT::NISUGATA %></th>
+              <th scope="col"><%= CONST_TXT::HOKANKISU %></th>
+              <th scope="col"><% if !authority_convert_kami1(currentuser_authorityget).eql?(CONST_KENGEN::REF) %>
+                                <%= submit_tag CONST_BTN::KOUSIN, name:nil,data: { confirm: CONST_MSG::MEISAIKAKUNIN}, :class=>"update btn-warning"  %>
+                              <% end %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 明細データをループで表示 -->
+            <% @depomains.each_with_index do |f,idx| %>
+              <tr data-row="1">
+                <td><%= f.id %></td>
+                <td><%= f.depo_cd %></td>
+                <td><%= f.seikei_num %></td>
+                <td><%= f.shipment_cnt %></td>
+                <td><%= f.shipment_date %></td>
+                <td><%= f.arrival_date %></td>
+                <td><%= f.serial_num %><br/><%= f.product_name %></td>
+                <td><%= f.section_code %></td>
+                <td><%= f.sales_name %></td>
+                <td><%= f.mst_cd2 %></td>
+                <td><%= hidden_field :r, :r_id, {index:idx,value:f.id} %>
+                    <%= hidden_field :r, :r_status, {index:idx,value:f.status} %>
+                    <%= hidden_field :r, :r_keep_division, {index:idx,value:f.keep_division} %>
+                    <%= hidden_field :r, :r_keep_day, {index:idx,value:f.keep_day} %>
+                    <%= hidden_field :r, :r_over_day, {index:idx,value:f.over_day} %>
+                    <%= hidden_field :r, :r_fee_point, {index:idx,value:f.fee_point} %>
+                    <%= hidden_field :r, :r_depo_shipment_date, {index:idx,value:f.depo_shipment_date} %>
+                    <%= hidden_field :r, :r_arrival_date, {index:idx,value:f.arrival_date} %>
+                    <%= text_field :r, :r_depo_arrival_date, {class:"datepicker", index:idx ,value:f.depo_arrival_date ,readonly:"true"}  %></td>
+                <td><%= f.depo_shipment_date %></td>
+                <td><%= f.keep_day %></td>
+                <td><%= f.over_day %></td>
+                <td><%= f.mst_cd3 %></td>
+                <td><%= f.fee_point %></td>
+                <td><%= link_to CONST_LINK::SYOUSAI, "/depomain/#{f.id}" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+    <div class="pagination">
+      <%= will_paginate @depomains, :previous_label => CONST_BTN::MAE, :next_label => CONST_BTN::TUGI %>
+    </div>
+  </body>
+</html>

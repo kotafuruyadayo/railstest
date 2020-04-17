@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- タイトル設定 ★ログイン画面のみ個別設定のため注意 -->
+    <title><%=CONST::TITLE %></title>
+    <%= stylesheet_link_tag "top", :media => "all" , 'data-turbolinks-track': 'reload' %>
+        <!-- BootStrap関連設定 -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <!-- ヘッダのロゴ表示 ★ログイン画面のみ個別設定のため注意 -->
+  <table>
+    <tr><td><%= image_tag('logo.png') %></td>
+        <td>
+          <div class="nondisplayFrame"></div>
+        </td></tr>
+  </table>
+  <h1>デポ入出荷管理システム</h1>
+  <!-- オートコンプリートOFFにしたい  -->
+  <body class="main-container">
+    <%= form_for(:session, url: login_path) do |f| %>
+      <table class=<%= CLASS::TABLECENTER %> border=2 width=400>
+        <tr bgcolor="#829ebc"><td><%=CONST_TXT::USERID %></td><td><%= f.text_field :name %></td></tr>
+        <tr bgcolor="#829ebc"><td><%=CONST_TXT::PASSWORD %></td><td><%= f.password_field :password %></td></tr>
+      </table>
+      <table class=<%= CLASS::TABLECENTER %>>
+        <td><%= submit_tag CONST_LINK::LOGIN, name:nil , :class=>"search btn-warning" %></td>
+      </table>
+    <% end %>
+    <br/>
+    <% if flash[:danger] %>
+      <div class="alert alert-danger">
+        <span style="background-color:#FFFFFF"><%= flash[:danger] %></span>
+      </div>
+    <% end %>
+  </body>
+</html>

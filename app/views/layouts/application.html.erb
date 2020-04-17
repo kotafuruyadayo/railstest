@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <div class="midasi">
+    <title><%=CONST::TITLE %></title>
+  </div>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- jQuery読み込み -->
+    <!-- バージョンが古いためコメントアウト <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- BootStrap関連設定 -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <!-- ソート実装 START -->
+    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.default.min.css"> -->
+    <!--テキストボックスのソートができない事象の対応 参考URL:https://stackoverflow.com/questions/8186501/using-jquery-tablesorter-to-sort-gridview-with-textbox-elements -->
+    <!-- <script> -->
+    <!--   $(document).on('turbolinks:load', function() { -->
+    <!--     $('#fav-table').tablesorter({ -->
+    <!--       textExtraction: function(elem) { -->
+    <!--         var $input = $("input[type=text]", elem); -->
+    <!--         return $input.val() || $(elem).text(); -->
+    <!--       } -->
+    <!--     }); -->
+    <!--   }); -->
+    <!-- </script> -->
+    <!-- ソート実装 END -->
+    <!-- カレンダ表示(datepicker) ※IEでも表示可能なもの START -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script> 
+    <script>
+      // ページ遷移時にjqueryの読み込み直しが行われない場合があるため下記記載に変更（参考URL:https://qiita.com/r_ishimori/items/35d8676d73779549ebc8)
+      $(document).on('turbolinks:load', function() {
+        // 複数行ある場合にうまく動作しないため、下記処理を追記（参考URL：https://うぇぶこーぼー.website/jquery%E3%81%A7datepicker%E3%82%92%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%A7%E4%BD%BF%E3%81%86.html）
+        var row =$("#fav-table tbody").children().length //要素数の取得
+        // 表示されている行分、処理を実施
+        for (var i=0; i < row; i++) {
+          // 行番号を更新
+          $("#fav-table tbody tr:nth-child("+ i +")").attr("data-row", i);
+          // カレンダーフォームにidを設定
+          $("#fav-table tbody tr:nth-child("+ i +") input.datepicker").attr("id", "datepicker_" + i);
+          // カレンダーイベントの再設定
+          $("#datepicker_"+i).removeClass("hasDatepicker").off("focusin").on("focusin", function(e) {
+            $(this).datepicker();
+          });
+        }
+        // datepickerの設定
+        $(".datepicker").datepicker();
+      });
+    </script>
+    <!-- カレンダ表示(datepicker) ※IEでも表示可能なもの END -->
+    <!-- 検索条件クリア START -->
+    <script>
+      $(document).on('turbolinks:load', function(){
+        // 入力値をリセット
+        $("button.reset").click(function(){
+          $('input[type="text"], \
+             input[type="radio"], \
+             input[type="checkbox"], \
+             input[type="number"], \
+             select').val("").removeAttr('checked').removeAttr('selected');
+        })
+      });
+    </script>
+    <!-- 検索条件クリア  END -->
+
+  </head>
+  <!-- ログインしているかどうか確認  END -->
+  <% if logged_in? %>
+    <!-- ヘッダのロゴ表示  -->
+    <table>
+      <tr><td><%= image_tag('logo.png') %></td>
+          <td>
+            <div class="nondisplayFrame">
+              <%= link_to CONST_LINK::LOGOUT, logout_path, method: :delete %>
+            </div>
+          </td>
+          <td>　ユーザID：<%= current_user.name %>(<%= current_user.authority %>)</td></tr>
+    </table>
+    <!-- ボディ表示  -->
+    <body>
+      <%= yield %>
+    </body>
+  <% else %>
+    <%= render 'depologin/not_logged_in' %>
+  <% end %>
+</html>

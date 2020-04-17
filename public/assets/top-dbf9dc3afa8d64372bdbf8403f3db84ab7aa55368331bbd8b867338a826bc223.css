@@ -1,0 +1,140 @@
+@charset "UTF-8";
+/* line 6, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+h1 {
+  text-align: center;
+  font-weight: bold;
+  border-style: none none solid solid;
+  border-width: 0px 0px 3px 7px;
+  border-color: #240886;
+  padding: 8px 0px 0px 0px;
+  color: #d1c7cd;
+  background-color: #2c22b8;
+  width: 100%;
+  ime-mode: disabled;
+}
+
+/* line 20, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+body {
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  color: #630;
+  font-size: 0.95em;
+}
+
+/* line 28, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+input.disable {
+  background: lightgrey;
+}
+
+/* line 32, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+tr.disable {
+  background: lightgrey;
+}
+
+/* line 37, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* line 43, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table th:first-child {
+  border-radius: 5px 0 0 0;
+}
+
+/* line 47, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table th:last-child {
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #3c6690;
+}
+
+/* line 52, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table th {
+  text-align: center;
+  color: white;
+  background: linear-gradient(#829ebc, #225588);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.3) inset;
+  padding: 10px 0;
+}
+
+/* line 64, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table td {
+  text-align: center;
+  border-left: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  border-top: none;
+  box-shadow: 0px -3px 5px 1px #eee inset;
+  padding: 10px 0;
+}
+
+/* line 74, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table td:last-child {
+  border-right: 1px solid #a8b7c5;
+}
+
+/* line 78, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+/* line 82, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+#fav-table tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+
+/* line 105, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.pagination {
+  height: 100px;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* line 111, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.pagination a {
+  background-color: grey;
+  text-decoration: none;
+}
+
+/* line 115, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.pagination * {
+  color: white;
+  margin: 0 7px;
+  text-decoration: none;
+  padding: 12.5px 18.5px;
+  border-radius: 25px;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* line 123, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.current {
+  font-style: normal;
+  color: white;
+  background: #93c9ff;
+  border-radius: 22.5px;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* line 130, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.pagination a:hover {
+  background: #93c9ff;
+}
+
+/* line 133, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.pagination .disabled {
+  color: #666666;
+  padding: 11px 17px;
+  border: 1px solid #666666;
+  border-radius: 23px;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* line 141, C:/Users/P2018070/furuyatest2/app/assets/stylesheets/top.scss */
+.main-container {
+  background-image: url(/assets/logo02-d220e159fcd8643cd232a33c34e2916ece81f12cb4ebd43fcfaa8a2e54b91b5e.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}

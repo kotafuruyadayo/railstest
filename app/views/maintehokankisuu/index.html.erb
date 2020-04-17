@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス(保管期数設定)</h1>
+  <body>
+    <div class=<%=CLASS::MODORU %>>
+      <%= link_to CONST_BTN::MODORU, "/maintenance" %>
+    </div>
+    <br/><br/>
+    <table class=<%= CLASS::TABLECENTER %>>
+      <%= form_tag("/depomain",:method => 'get') do %>
+        <td><%= submit_tag CONST_BTN::JIKKOU, name:nil,data: {confirm: CONST_MSG::JIKKOUKAKUNIN}, :class=>"search btn-warning" %></td>
+      <% end %>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス(デポ先)</h1>
+  <body>
+    <%= form_tag("/maintedeposaki",:method => 'update') do %>
+      <div class=<%=CLASS::MODORU %>>
+        <%= link_to CONST_BTN::MODORU, "/maintenance" %>
+      </div>
+      <br/>
+      <br/>
+      <table class=<%=CLASS::TABLECENTER %>>
+        <tr><td><%= submit_tag CONST_BTN::JIKKOU, name:nil,data: {confirm: CONST_MSG::JIKKOUKAKUNIN}, :class=>"search btn-warning" %></td></tr>
+      </table>
+      <br/>
+      <table class=<%=CLASS::TABLECENTER %> border=2 width=400>
+        <tr><td><%=CONST::DEPOSAKIMEISHOU_KYU %></td>
+            <td><%= select_tag :depomst_id1, options_from_collection_for_select(combo_deposakimente , :mst_id, :mst_cd) %></td></tr>
+        <tr><td><%=CONST::DEPOSAKIMEISHOU_SIN %></td>
+            <td><%= text_field_tag :sin_meishou,"", {size:10} %></td></tr>
+      </table>
+      <br/>
+      <br/>
+      <table class=<%= CLASS::TABLECENTER %> border=1 >
+        <tr><td colspan=2 align="center"><font color=red>操作説明</font></td></tr>
+        <tr><td><%=CONST::TOUROKUJI %></td><td><%=CONST::MSG_TOUROKUJI %></td></tr>
+        <tr><td><%=CONST::KOUSINJI %></td><td><%=CONST::MSG_KOUSINJI %></td></tr>
+        <tr><td><%=CONST::SAKUJYOJI %></td><td><%=CONST::MSG_SAKUJYOJI %></td></tr>
+      </table>
+    <% end %>
+  </body>
+</html>

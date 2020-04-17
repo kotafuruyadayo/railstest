@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>デポ入出荷・照会（メンテナンス）</h1>
+  <body>
+    <div class=<%=CLASS::MODORU %> >
+      <%= link_to CONST_BTN::MODORU, "/depomain" %>
+    </div>
+    <br/><br/>
+    <table class=<%= CLASS::TABLECENTER %> border=2 width=300>
+      <tr><td align="center"><%= link_to CONST_LINK::DEPOSAKI , "/maintedeposaki" %></td></tr>
+      <tr><td align="center"><%= link_to CONST_LINK::USERKANRI, "/mainte_user" %></td></tr>
+      <tr><td align="center"><%= link_to CONST_LINK::NISUGATASETUP, "/maintenisugata" %></td></tr>
+      <tr><td align="center"><%= link_to CONST_LINK::HOKANKISUUSET, "/maintehokankisuu" %></td></tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス(ユーザ管理)</h1>
+  <body>
+    <div class=<%=CLASS::MODORU %>>
+      <%= link_to CONST_BTN::MODORU, "/maintenance" %>
+    </div>
+    <br/><br/>
+    <div class="ml-auto posts_button">
+      <a href="/mainte_user/new">
+        <button type="button" class="new btn-warning"><%= CONST_BTN::NEW %></button>
+      </a>
+    </div>
+    <div class="Meisai">
+      <%= form_tag("/depomain",:method => 'patch') do %>
+        <table id ="fav-table" class="table table-fixed">
+          <thead class="thead1">
+            <tr>
+              <th scope="col"><%=CONST_TXT::USERID %></th>
+              <th scope="col"><%=CONST_TXT::PASSWORD %></th>
+              <th scope="col"><%=CONST_TXT::KENGEN %></th>
+              <th scope="col"><%=CONST_TXT::DEPOSAKI %></th>
+              <th scope="col"><%=CONST_TXT::SAISHUACCESS %></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 明細データをループで表示 -->
+            <% @users.each_with_index do |f,idx| %>
+              <tr>
+                <td><%= f.name %></td>
+                <td><%= f.email %></td>
+                <td><% if authority_convert_kami1(f.authority).eql?(CONST_KENGEN::REF) %>
+                      <%=CONST::MAINTEUSER_SANSHOU %><!-- 参照権限(上1桁が1) -->
+                    <% else %>
+                      <%=CONST::MAINTEUSER_KOUSIN %> <!-- 更新権限(上1桁が0,9) -->
+                    <% end %>
+                </td>
+                <td><%= f.mst_cd %></td>
+                <td><%= f.updated_at %></td>
+                <td><%= hidden_field :r, :r_id, {index:idx,value:f.id} %>
+                <%= link_to CONST_LINK::SYOUSAI, "/mainte_user/#{f.id}" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+  </body>
+</html>

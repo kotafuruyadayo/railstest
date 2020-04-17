@@ -1,0 +1,2 @@
+class MaintehokankisuuController < ApplicationController
+end

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <h1>メンテナンス（荷姿セットアップ）</h1>
+  <body>
+    <div class=<%=CLASS::MODORU %>>
+      <%= link_to CONST_BTN::MODORU, "/maintenance" %>
+    </div>
+    <br/>
+    <%= form_tag("/maintenisugata",:method => 'post',multipart: true) do %>
+      <table class=<%= CLASS::TABLECENTER %>>
+        <tr><td><%= CONST::MAINTENISUGATA1 %></td><td>　　　</td>
+            <td><%= submit_tag CONST_BTN::JIKKOU, name:nil,data: {confirm: CONST_MSG::JIKKOUKAKUNIN}, :class=>"search btn-warning" %></td>
+        <tr>
+      </table>
+      <br/>
+      <br/>
+      <table class=<%= CLASS::TABLECENTER %> border=2 width=600>
+        <tr>
+          <td><%= file_field_tag :file %></td>
+        </tr>
+      </table>
+    <% end %>
+    <br/>
+    <br/>
+    <br/>
+    <% if flash[:danger] %>
+      <div class="alert alert-danger">
+        <span style="background-color:#FFFFFF"><%= flash[:danger] %></span>
+      </div>
+    <% end %>
+  </body>
+</html>
