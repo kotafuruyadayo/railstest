@@ -79,11 +79,11 @@ class Depomain < ApplicationRecord
 
   #depomainデータ取得
   def self.depomainselect
-    return Depomain.joins("LEFT OUTER JOIN depomsts depoM1 ON depomains.depo_cd = depoM1.mst_cd and depoM1.mst_type ='1' ")
-                   .joins("LEFT OUTER JOIN depomsts depoM2 ON depomains.keep_division = depoM2.mst_id and depoM2.mst_type ='2' ")
-                   .joins("LEFT OUTER JOIN depomsts depoM3 ON depomains.packing_type = depoM3.mst_cd and depoM3.mst_type ='3' ")
-                   .joins("LEFT OUTER JOIN depomsts depoM4 ON depomains.delivery_car = depoM4.mst_cd and depoM4.mst_type ='4' ")
-                   .joins("LEFT OUTER JOIN depomsts depoM5 ON depomains.delivery_trader = depoM5.mst_cd and depoM5.mst_type ='5' ")
+    return Depomain.joins("LEFT OUTER JOIN depomsts depoM1 ON depomains.depo_cd = depoM1.mst_cd and depoM1.mst_type =1 ")
+                   .joins("LEFT OUTER JOIN depomsts depoM2 ON depomains.keep_division = depoM2.mst_id::text and depoM2.mst_type =2 ")
+                   .joins("LEFT OUTER JOIN depomsts depoM3 ON depomains.packing_type = depoM3.mst_cd and depoM3.mst_type =3 ")
+                   .joins("LEFT OUTER JOIN depomsts depoM4 ON depomains.delivery_car = depoM4.mst_cd and depoM4.mst_type =4 ")
+                   .joins("LEFT OUTER JOIN depomsts depoM5 ON depomains.delivery_trader = depoM5.mst_cd and depoM5.mst_type =5 ")
                    .select("depomains.*
                            ,depoM1.mst_cd as mst_cd1
                            ,depoM1.mst_id as mst_id1
