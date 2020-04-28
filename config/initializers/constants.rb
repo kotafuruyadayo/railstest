@@ -1,7 +1,12 @@
 #定数を記載 ★変更を反映させる際はサーバの再起動が必要
 module CONST
   #画面表示文言
-  TITLE                    ="Furuyatest_デポ入出荷管理システム"
+  if Rails.env == 'production'
+    # 本番環境用の処理
+    TITLE                    ="★本番★Furuyatest_デポ入出荷管理システム"
+  else
+    TITLE                    ="Furuyatest_デポ入出荷管理システム"
+  end
   BACKUPUPLOAD1            ="<バックアップ戻し(★注意 DBの全データが入れ替わります)>"
   DEPOUPLOAD1              ="<工場出荷登録>"
   MAINTENISUGATA1          ="<荷姿セットアップ>"
