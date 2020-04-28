@@ -55,6 +55,14 @@ gem "jquery-rails"
 gem 'bootstrap', '~> 4.3.1'
 #gem 'coffee-script-source', '1.8.0'        #←これを追加
 
+# 帳票出力用(0.8.0でないと画像が表示できなかったため、こちらを使用)　参考URL:https://github.com/thinreports/thinreports-generator/issues/39
+gem 'thinreports', '0.10.3'
+
+#バーコード表示用
+gem 'barby'
+gem 'rqrcode'
+gem 'chunky_png'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
