@@ -142,4 +142,27 @@ class DepomainController < ApplicationController
   end
 
   #################### 詳細画面関連 ####################
+  # pdf出力関連
+  def chouhyou
+    #検索処理★テスト的に追加
+    @depomains,@depomains_cnt = commonsearch(1)
+    #検索処理★テスト的に追加
+    respond_to do |format|
+      format.html # show.html.erb
+      format.pdf do
+
+        # Thin ReportsでPDFを作成
+        # 先ほどEditorで作ったtlfファイルを読み込む
+        report = OrderPDF.create @depomains
+
+        # ブラウザでPDFを表示する
+        # disposition: "inline" によりダウンロードではなく表示させている
+        send_data \
+          report.generate, \
+          filename:    "#{5}.pdf", \
+          type:        "application/pdf", \
+          disposition: "inline"
+      end
+    end
+  end
 end

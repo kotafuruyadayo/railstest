@@ -22,7 +22,9 @@ Rails.application.routes.draw do
   get 'depomain/excel', to: 'depomain#csv_download'
   # 一覧EXCEL出力
   get 'depomain/excelall', to: 'depomain#csv_download'
-
+  # 帳票出力
+  get 'depomain/chouhyou', to: 'depomain#chouhyou'
+  
   # 詳細表示
   get 'depomain/:id', to: 'depomain#show'
   # 詳細表示(更新・削除)

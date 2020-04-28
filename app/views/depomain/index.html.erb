@@ -29,6 +29,9 @@
             <%= link_to CONST_LINK::MAINTENANCE, "/maintenance" %>
           <% end %>
         <% end %>
+        <%= link_to "PDFで表示",
+              depomain_chouhyou_path(format: "pdf"),
+              :class => 'btn btn-primary' %>
       </div>
       <div class="Kensaku">
         <table>
