@@ -53,7 +53,7 @@ class Depomain < ApplicationRecord
     #名称
     results=results.where(['product_name LIKE ?', "%#{search_param[:product_name]}%"]) if search_param[:product_name].present?
     #指定日保管
-    results=results.where([' (keep_division != 2 AND depo_shipment_date>=?) OR (keep_division = 2 AND depo_shipment_date is null) ', search_param[:fixed_date].gsub(/\//,"")]) if search_param[:fixed_date].present?
+    results=results.where([' (keep_division != '2' AND depo_shipment_date>=?) OR (keep_division = '2' AND depo_shipment_date is null) ', search_param[:fixed_date].gsub(/\//,"")]) if search_param[:fixed_date].present?
 
     #件数の取得(絞込み後のタイミングで取得)
     depomains_cnt = results.size
