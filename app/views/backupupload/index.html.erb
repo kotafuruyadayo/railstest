@@ -8,7 +8,7 @@
       <%= link_to CONST_BTN::MODORU, "/depomain" %>
     </div>
     <br/>
-    <%= form_tag("/depoupload",:method => 'post',multipart: true) do %>
+    <%= form_tag("/backupupload",:method => 'post',multipart: true) do %>
       <table class=<%= CLASS::TABLECENTER %>>
         <tr><td><%= CONST::BACKUPUPLOAD1 %></td><td>　　　</td>
             <td><%= submit_tag CONST_BTN::JIKKOU, name:nil,data: {confirm: CONST_MSG::JIKKOUKAKUNIN}, :class=>"search btn-warning" %></td>
