@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # 検索
   def self.search()
     #最初に全件取得
-    results=User.joins("LEFT OUTER JOIN depomsts depoM1 ON substr(users.authority,4,1) = depoM1.mst_id and depoM1.mst_type =1 ")
+    results=User.joins("LEFT OUTER JOIN depomsts depoM1 ON substr(users.authority,4,1) = depoM1.mst_id::text and depoM1.mst_type =1 ")
                 .select("users.*,depoM1.mst_cd ")
   
     #件数の取得
