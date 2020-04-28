@@ -20,7 +20,7 @@ class BackupuploadController < ApplicationController
         end
     else
       # パラメータの条件ではねられたり、途中でエラーが起きたりした時はここまで来る
-      flash[:danger] = CONST_MDG::ERRORUPLOADCSVSELECT
+      flash[:danger] = CONST_MSG::ERRORUPLOADCSVSELECT
       redirect_to action: 'index'
     end
   end
